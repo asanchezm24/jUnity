@@ -1,6 +1,5 @@
 import Core.Field;
 import Core.Window;
-import org.w3c.dom.ls.LSOutput;
 
 import java.util.ArrayList;
 import java.util.Random;
@@ -14,6 +13,7 @@ public class Joc {
 
 
 	public static void main(String[] args) throws InterruptedException {
+        
         // Personaje más pequeño (ej. 50x75)
         Personatge pers = new Personatge("Adri", 100, 745, 150, 820, 0, "resources/Juego/mrPopuu.png", f);
 
@@ -40,23 +40,26 @@ public class Joc {
         plataformas[11] = new Roca("plat12", 400, 150, 528, 182, 0, "resources/Juego/plataforma192x64.png", f);
 
 		crearCoins();
-
+		int i = 0;
         boolean sortir = false;
         while (!sortir) {
+
             f.draw();
             input(pers);
             Thread.sleep(30);
         }
     }
-	
+
 	public static void crearCoins(){
-		for(int i = 0; i < 1; i++){
+		for(int i = 0; i < 5; i++){
 			Random rand = new Random();
-			int x1 = Math.abs(rand.nextInt(60,w.getWidth() - 60));
-			int y1 = Math.abs(rand.nextInt(60,w.getHeight() - 60));
-			coins.add(new Coin("coin" + i, x1, y1, x1 + 50, y1 + 50,0, "resources/Juego/coin.png", f));
+			int x1 = Math.abs(rand.nextInt(0,w.getWidth()));
+			int y1 = Math.abs(rand.nextInt(0,w.getHeight()));
+			Coin coin = new Coin("coin" + i, x1, y1, x1 + 50, y1 + 50,0, "resources/Juego/coin.png", f);
+			coins.add(coin);
 		}
 	}
+
 	private static void input(Personatge pers) {
 		if (w.getPressedKeys().contains('d')) {
 			pers.moviment(Input.DRETA);
