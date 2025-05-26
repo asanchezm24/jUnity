@@ -28,7 +28,6 @@ public class Joc {
 		int i = 0;
         boolean sortir = false;
         while (!sortir) {
-
             f.draw();
             input(pers);
             Thread.sleep(30);
