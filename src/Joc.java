@@ -39,7 +39,6 @@ public class Joc {
         plataformas[10] = new Roca("plat11", 200, 200, 328, 232, 0, "resources/Juego/plataforma192x64.png", f);
         plataformas[11] = new Roca("plat12", 400, 150, 528, 182, 0, "resources/Juego/plataforma192x64.png", f);
 
-		crearCoins();
 		int i = 0;
         boolean sortir = false;
         while (!sortir) {
