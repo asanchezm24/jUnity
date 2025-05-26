@@ -12,10 +12,10 @@ public class Joc {
 		Personatge pers = new Personatge("Adri",  250, 250, 300, 350, 0, "resources/ganso.png", f);
 		
         // Suelo - largo y fino
-        Roca terra = new Roca("terra", 0, 450, 1900, 460, 0, "resources/rock1.png", f);
+        Roca terra = new Roca("terra", 0, 820, w.getWidth(), 830, 0, "resources/rock1.png", f);
 
         // Techo - largo y fino
-        Roca sostre = new Roca("sostre", 0, 50, 1900, 60, 0, "resources/rock1.png", f);
+        Roca sostre = new Roca("sostre", 0, 0, w.getWidth(), 10, 0, "resources/rock1.png", f);
 
         // Plataforma central
         Roca plataforma = new Roca("plat", 300, 300, 700, 310, 0, "resources/rock1.png", f);
