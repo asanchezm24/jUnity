@@ -5,6 +5,7 @@ public class Joc {
 
 	static Field f = new Field();
 	static Window w = new Window(f);
+	//hola
 
 	public static void main(String[] args) throws InterruptedException {
 
@@ -31,13 +32,12 @@ public class Joc {
 	private static void input(Personatge pers) {
 		if (w.getPressedKeys().contains('d')) {
 			pers.moviment(Input.DRETA);
-		}
-		if (w.getPressedKeys().contains('a')) {
+		} else if (w.getPressedKeys().contains('a')) {
 			pers.moviment(Input.ESQUERRA);
-		}
-		if (w.getPressedKeys().contains('w')) {
+		} else if (w.getPressedKeys().contains('w')) {
 			pers.moviment(Input.SALT);
+		} else {
+			pers.moviment(Input.RES);
 		}
-
 	}
 }

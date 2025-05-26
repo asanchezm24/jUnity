@@ -31,14 +31,17 @@ public class Personatge extends PhysicBody {
 	public void moviment(Input in) {
 
 		if (in == Input.DRETA) {
-			this.setVelocity(+4, 0);
+			this.setVelocity(+5, this.velocity[1]);
 		}
 		if (in == Input.ESQUERRA) {
-			this.setVelocity(-2, 0);
+			this.setVelocity(-5, this.velocity[1]);
 		}
 		if (in == Input.SALT && salts < 2) {
-			this.addForce(0, -1);
+			this.addForce(0, -3);
 			this.salts++;
+		}
+		if(in.equals(Input.RES)){
+			this.setVelocity(0, this.velocity[1]);
 		}
 
 	}

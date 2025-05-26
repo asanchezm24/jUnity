@@ -1,3 +1,3 @@
 public enum Input {
-	DRETA, ESQUERRA, SALT;
+	DRETA, ESQUERRA, SALT,RES;
 }
