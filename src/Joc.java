@@ -1,15 +1,19 @@
 import Core.Field;
 import Core.Window;
 
+import java.util.ArrayList;
+import java.util.Random;
+
 public class Joc {
 
 	static Field f = new Field();
 	static Window w = new Window(f);
 	//hola
+	static ArrayList<Coin> coins = new ArrayList<>();
+
 
 	public static void main(String[] args) throws InterruptedException {
-
-		Personatge pers = new Personatge("Adri",  250, 250, 300, 350, 0, "resources/ganso.png", f);
+		Personatge pers = new Personatge("Adri",  250, 250, 300, 350, 0, "resources/Juego/mrPopuu.png", f);
 		
         // Suelo - largo y fino
         Roca terra = new Roca("terra", 0, 820, w.getWidth(), 830, 0, "resources/rock1.png", f);
@@ -20,14 +24,26 @@ public class Joc {
         // Plataforma central
         Roca plataforma = new Roca("plat", 300, 300, 700, 310, 0, "resources/rock1.png", f);
 
-
+		crearCoins();
+		int i = 0;
         boolean sortir = false;
         while (!sortir) {
+
             f.draw();
             input(pers);
             Thread.sleep(30);
         }
     }
+
+	public static void crearCoins(){
+		for(int i = 0; i < 5; i++){
+			Random rand = new Random();
+			int x1 = Math.abs(rand.nextInt(0,w.getWidth()));
+			int y1 = Math.abs(rand.nextInt(0,w.getHeight()));
+			Coin coin = new Coin("coin" + i, x1, y1, x1 + 50, y1 + 50,0, "resources/Juego/coin.png", f);
+			coins.add(coin);
+		}
+	}
 
 	private static void input(Personatge pers) {
 		if (w.getPressedKeys().contains('d')) {
