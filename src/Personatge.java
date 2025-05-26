@@ -32,9 +32,11 @@ public class Personatge extends PhysicBody {
 
 		if (in == Input.DRETA) {
 			this.setVelocity(+5, this.velocity[1]);
+			this.flippedX = true;
 		}
 		if (in == Input.ESQUERRA) {
 			this.setVelocity(-5, this.velocity[1]);
+			this.flippedX = false;
 		}
 		if (in == Input.SALT && salts > 0) {
 			this.addForce(0, -2);
