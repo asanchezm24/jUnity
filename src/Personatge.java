@@ -35,22 +35,31 @@ public class Personatge extends PhysicBody {
 
 		if (in == Input.DRETA) {
 			this.setVelocity(+5, this.velocity[1]);
+			this.flippedX = true;
 		}
 		if (in == Input.ESQUERRA) {
 			this.setVelocity(-5, this.velocity[1]);
+			this.flippedX = false;
 		}
 		if (in == Input.SALT) {
-			if(aterra) {
-				this.addForce(0, -1);
-			} else if (dobleSalto){
-				this.addForce(0,-1);
-				dobleSalto = false;
-			}
+			salto();
 		}
 		if(in.equals(Input.RES)){
 			this.setVelocity(0, this.velocity[1]);
 		}
-
+	}
+	
+	public void salto() {
+		if(aterra && dobleSalto) {
+			this.setVelocity(0, 0);
+			this.addForce(0, -1);
+			aterra = false;
+		} 
+		else if(!aterra && dobleSalto) {
+			this.setVelocity(0, 0);
+			this.addForce(0, -1);
+			dobleSalto = false;
+		}
 	}
 
 }
