@@ -4,9 +4,10 @@ import Core.Sprite;
 
 import java.util.GregorianCalendar;
 
-public class Personatge extends PhysicBody {
+public class Personatge extends PhysicBody implements CoinObserver{
 
 	private Input input;
+	private int puntos;
 	boolean aterra = true;
 	boolean dobleSalto = true;
 	//TODO: Mejorar movimiento y saltos.
@@ -14,12 +15,21 @@ public class Personatge extends PhysicBody {
 
 	public Personatge(String name, int x1, int y1, int x2, int y2, double angle, String path, Field f) {
 		super(name, x1, y1, x2, y2, angle, path, f);
+		this.puntos = 0;
 		this.setConstantForce(0, 0.2);
+	}
+
+	//Getters y Setters
+
+
+	public int getPuntos() {
+		return puntos;
 	}
 
 	@Override
 	public void onCollisionEnter(Sprite sprite) {
 		if (sprite instanceof Roca && sprite.y1 >= this.y2) {
+			//Cuando vuelve al suelo todos los booleanos a true y se resetea el sprite
 			aterra = true;
 			dobleSalto = true;
 			this.changeImage("resources/Juego/mrPopuu.png");
@@ -32,14 +42,17 @@ public class Personatge extends PhysicBody {
 	@Override
 	public void onCollisionExit(Sprite sprite) {
 		if (sprite instanceof Roca) {
+			//Cuando salte del colider del suelo Aterra se pone a false y se cambia el sprite por el de salto.
 			aterra = false;
+
+			//Esta función está en la clase Sprite del Core.
 			this.changeImage("resources/Juego/Salto.png");
 		}
 	}
 
 	public void moviment(Input in) {
-
-
+		//this.velocity[1] en la Y te permite mantener la fuerza de altura y poder
+		//seguir moviendote hacia los lados.
 		if (in == Input.DRETA) {
 			this.setVelocity(+5, this.velocity[1]);
 			this.flippedX = true;
@@ -55,7 +68,10 @@ public class Personatge extends PhysicBody {
 			this.setVelocity(0, this.velocity[1]);
 		}
 	}
-	
+
+
+	//Esto lo ha hecho el Adri
+	//Comenta el codigo, cochino
 	public void salto() {
 		if(aterra && dobleSalto) {
 			this.setVelocity(0, 0);
@@ -69,4 +85,8 @@ public class Personatge extends PhysicBody {
 		}
 	}
 
+	@Override
+	public void update(int num) {
+		this.puntos += num;
+	}
 }

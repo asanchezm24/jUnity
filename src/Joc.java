@@ -8,6 +8,7 @@ import Core.Window;
 public class Joc {
 
 	static int segundos;
+	static int puntos = 0;
 	static Field f = new Field();
 	static Window w = new Window(f);
 	static Crono crono = new Crono();
@@ -16,11 +17,14 @@ public class Joc {
 
 	public static void main(String[] args) throws InterruptedException {
 
+
+
 		// Personaje más pequeño (ej. 50x75)
-		Personatge pers = new Personatge("Adri", 100, 745, 150, 820, 0, "resources/Juego/mrPopuu.png", f);
+		//Con este ratio en mi Pantalla se ve bien. Probadlo vosotros y me decís. -Xavi
+		Personatge pers = new Personatge("Adri", 100, w.getHeight()-230, 250, w.getHeight()-50, 0, "resources/Juego/mrPopuu.png", f);
 
 		// Suelo
-		Roca terra = new Roca("terra", 0, 820, w.getWidth(), 850, 0, "resources/Juego/Suelo.png", f);
+		Roca terra = new Roca("terra", 0, w.getHeight()-50, w.getWidth(), w.getHeight(), 0, "resources/Juego/Suelo.png", f);
 
 		// Techo
 		Roca sostre = new Roca("sostre", 0, 0, w.getWidth(), 10, 0, "resources/Juego/Suelo.png", f);
@@ -28,7 +32,7 @@ public class Joc {
 		// 12 plataformas pequeñas (128x32), distribuidas en distintos puntos
 		Roca[] plataformas = new Roca[12];
 
-		plataformas[0] = new Roca("plat1", 50, 700, 178, 732, 0, "resources/Juego/plataforma192x64.png", f);
+		plataformas[0] = new Roca("plat1", 50, w.getHeight()-300, 242, w.getHeight()-234, 0, "resources/Juego/plataforma192x64.png", f);
 		plataformas[1] = new Roca("plat2", 250, 650, 378, 682, 0, "resources/Juego/plataforma192x64.png", f);
 		plataformas[2] = new Roca("plat3", 450, 600, 578, 632, 0, "resources/Juego/plataforma192x64.png", f);
 		plataformas[3] = new Roca("plat4", 650, 550, 778, 582, 0, "resources/Juego/plataforma192x64.png", f);
@@ -41,14 +45,22 @@ public class Joc {
 		plataformas[10] = new Roca("plat11", 200, 200, 328, 232, 0, "resources/Juego/plataforma192x64.png", f);
 		plataformas[11] = new Roca("plat12", 400, 150, 528, 182, 0, "resources/Juego/plataforma192x64.png", f);
 
-
-		Sprite temporizador = new Sprite("Temporizador", w.getWidth() - 80, 50, w.getWidth() - 20, 70, 0, f);
+		//Srite vacío para el timer
+		//He tenido que poner la clase Sprite en público, para no hacer una clase nueva.
+		//Si se necesita hacer otro, hacemos la clase y volvemos a poner el sprite en private o package.
+		Sprite temporizador = new Sprite("Temporizador", w.getWidth() - 200, 50, w.getWidth() - 20, 70, 0 ,f);
 		temporizador.text = true;
-		crearCoins();
-		int i = 0;
+
+		//Sprite.text se pone a true para que enseñe el Path como texto
+		Sprite marcador = new Sprite("Marcador",w.getWidth() - 200, 90, w.getWidth() - 20, 110, 0 ,f);
+		marcador.text = true;
+
+		crearCoins(pers);
+
 		boolean sortir = false;
 		while (!sortir) {
-			temporizador.path = Integer.toString(segundos);
+			temporizador.path = "Temps: "+Integer.toString(segundos );
+			marcador.path = "Punts: "+Integer.toString(pers.getPuntos());
 			input(pers);
 			f.draw();
 			Thread.sleep(30);
@@ -62,16 +74,25 @@ public class Joc {
 		}
 	}
 
-	public static void PillarSegundos(int i) {
+
+	public static void pillarSegundos(int i) {
 		segundos = i;
 	}
+	
+	public static void PillarPuntos(int i){
+		puntos = i;
+	}
 
-	public static void crearCoins() {
-		for (int i = 0; i < 5; i++) {
+	//TODO: Que las Coins no spawneen en el timer pls -Xavi <3 os lamo el siempresucio
+	//Esto lo ha hecho el Sam
+	//Comenta el codigo, puerco.
+	public static void crearCoins(Personatge pers) {
+		for (int i = 0; i < 10; i++) {
 			Random rand = new Random();
 			int x1 = Math.abs(rand.nextInt(0, w.getWidth()));
-			int y1 = Math.abs(rand.nextInt(0, w.getHeight()));
+			int y1 = Math.abs(rand.nextInt(20, w.getHeight()-100));
 			Coin coin = new Coin("coin" + i, x1, y1, x1 + 50, y1 + 50, 0, "resources/Juego/coin.png", f,crono);
+			coin.addObserver(pers);
 			coins.add(coin);
 		}
 	}

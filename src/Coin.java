@@ -21,6 +21,9 @@ public class Coin extends PhysicBody implements Recogible, CoinSubject {
     public void onCollisionExit(Sprite sprite) {
     }
 
+
+    //Al recoger avisa a los observers y se elimina
+    //TODO: Que la coin no tenga colision y puedas recojerla sin chocar.
     @Override
     public void recoger() {
         this.notifyObservers();
@@ -39,9 +42,8 @@ public class Coin extends PhysicBody implements Recogible, CoinSubject {
 
     @Override
     public void notifyObservers() {
-        System.out.println("Ha entrado en el notify");
         for(int i = 0; i < this.observers.size(); i++){
-            observers.get(i).updateTime(10);
+            observers.get(i).update(10);
         }
     }
 
