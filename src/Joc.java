@@ -54,6 +54,10 @@ public class Joc {
 			Thread.sleep(30);
 			if(segundos == 0){
 				sortir = true;
+				//Esto de abajo no funciona
+				Sprite gameOver = new Sprite("gameOver", (w.getWidth()/2)-200, (w.getHeight()/2) - 200,
+						(w.getWidth()/2)+200,(w.getHeight()/2) + 200,0,f);
+				gameOver.text = true;
 			}
 		}
 	}

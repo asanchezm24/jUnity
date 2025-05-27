@@ -22,6 +22,7 @@ public class Personatge extends PhysicBody {
 		if (sprite instanceof Roca && sprite.y1 >= this.y2) {
 			aterra = true;
 			dobleSalto = true;
+			this.changeImage("resources/Juego/mrPopuu.png");
 		} else if (sprite instanceof Recogible){
 			Recogible rec = (Recogible) sprite;
 			rec.recoger();
@@ -32,6 +33,7 @@ public class Personatge extends PhysicBody {
 	public void onCollisionExit(Sprite sprite) {
 		if (sprite instanceof Roca) {
 			aterra = false;
+			this.changeImage("resources/Juego/Salto.png");
 		}
 	}
 
