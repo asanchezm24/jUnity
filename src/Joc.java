@@ -2,12 +2,15 @@ import java.util.ArrayList;
 import java.util.Random;
 
 import Core.Field;
+import Core.Sprite;
 import Core.Window;
 
 public class Joc {
 
+	static int segundos;
 	static Field f = new Field();
 	static Window w = new Window(f);
+	static Crono crono = new Crono();
 	// hola
 	static ArrayList<Coin> coins = new ArrayList<>();
 
@@ -38,15 +41,25 @@ public class Joc {
 		plataformas[10] = new Roca("plat11", 200, 200, 328, 232, 0, "resources/Juego/plataforma192x64.png", f);
 		plataformas[11] = new Roca("plat12", 400, 150, 528, 182, 0, "resources/Juego/plataforma192x64.png", f);
 
+
+		Sprite temporizador = new Sprite("Temporizador", w.getWidth() - 80, 50, w.getWidth() - 20, 70, 0, f);
+		temporizador.text = true;
 		crearCoins();
 		int i = 0;
 		boolean sortir = false;
 		while (!sortir) {
-
-			f.draw();
+			temporizador.path = Integer.toString(segundos);
 			input(pers);
+			f.draw();
 			Thread.sleep(30);
+			if(segundos == 0){
+				sortir = true;
+			}
 		}
+	}
+
+	public static void PillarSegundos(int i) {
+		segundos = i;
 	}
 
 	public static void crearCoins() {
@@ -54,7 +67,7 @@ public class Joc {
 			Random rand = new Random();
 			int x1 = Math.abs(rand.nextInt(0, w.getWidth()));
 			int y1 = Math.abs(rand.nextInt(0, w.getHeight()));
-			Coin coin = new Coin("coin" + i, x1, y1, x1 + 50, y1 + 50, 0, "resources/Juego/coin.png", f);
+			Coin coin = new Coin("coin" + i, x1, y1, x1 + 50, y1 + 50, 0, "resources/Juego/coin.png", f,crono);
 			coins.add(coin);
 		}
 	}
@@ -68,7 +81,9 @@ public class Joc {
 			pers.moviment(Input.RES);
 		}
 
-		if (w.getPressedKeys().contains('w')) {
+		if (w.getPressedKeys().contains('w') && pers.aterra) {
+			pers.moviment(Input.SALT);
+		} else if (w.getPressedKeys().contains('w') && pers.dobleSalto){
 			pers.moviment(Input.SALT);
 		}
 	}

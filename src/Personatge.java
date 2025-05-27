@@ -2,6 +2,8 @@ import Core.Field;
 import Core.PhysicBody;
 import Core.Sprite;
 
+import java.util.GregorianCalendar;
+
 public class Personatge extends PhysicBody {
 
 	private Input input;
@@ -20,6 +22,9 @@ public class Personatge extends PhysicBody {
 		if (sprite instanceof Roca && sprite.y1 >= this.y2) {
 			aterra = true;
 			dobleSalto = true;
+		} else if (sprite instanceof Recogible){
+			Recogible rec = (Recogible) sprite;
+			rec.recoger();
 		}
 	}
 

@@ -94,7 +94,7 @@ public class Sprite implements Serializable, Comparable<Sprite> {
 	/**
 	 * Font for the text if the Sprite is used as text
 	 */
-	public Font font = new Font("SansSerif", Font.PLAIN, 16);
+	public Font font = new Font("SansSerif", Font.PLAIN, 30);
 	/**
 	 * Color for the text if the Sprite is used as text
 	 */
@@ -210,7 +210,7 @@ public class Sprite implements Serializable, Comparable<Sprite> {
 	// Fer tots els canvis al constructor privat de Sprite. Si no m'oblidaré algun
 	// dia de fer el canvi a algun dels 40000 constructors i no trobaré mai el
 	// problema
-	private Sprite(String name, int x1, int y1, int x2, int y2, double angle, Field f) {
+    public Sprite(String name, int x1, int y1, int x2, int y2, double angle, Field f) {
 		super();
 		this.name = name;
 		this.x1 = x1;
