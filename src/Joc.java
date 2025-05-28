@@ -21,7 +21,7 @@ public class Joc {
 
 		// Personaje más pequeño (ej. 50x75)
 		//Con este ratio en mi Pantalla se ve bien. Probadlo vosotros y me decís. -Xavi
-		Personatge pers = new Personatge("Adri", 100, w.getHeight()-230, 250, w.getHeight()-50, 0, "resources/Juego/mrPopuu.png", f);
+		Personatge pers = new Personatge("Adri", 800, w.getHeight()-230, 950, w.getHeight()-50, 0, "resources/Juego/mrPopuu.png", f);
 
 		// Suelo
 		Roca terra = new Roca("terra", 0, w.getHeight()-50, w.getWidth(), w.getHeight(), 0, "resources/Juego/Suelo.png", f);
@@ -63,7 +63,8 @@ public class Joc {
 			marcador.path = "Punts: "+Integer.toString(pers.getPuntos());
 			input(pers);
 			f.draw();
-			Thread.sleep(30);
+			//TODO: Hay que mirar esto, tiene que haber otra forma.
+			Thread.sleep(45);
 			if(segundos == 0){
 				sortir = true;
 				//Esto de abajo no funciona
@@ -98,18 +99,21 @@ public class Joc {
 	}
 
 	private static void input(Personatge pers) {
-		if (w.getPressedKeys().contains('d')) {
+
+		//Por alguna razón, esto funciona mejor que lo otro. No se, si veis otra forma mejor provadla.
+		boolean dreta = w.getPressedKeys().contains('d');
+		boolean esquerra = w.getPressedKeys().contains('a');
+		boolean salto = w.getPressedKeys().contains('w');
+
+		if (dreta) {
 			pers.moviment(Input.DRETA);
-		} else if (w.getPressedKeys().contains('a')) {
+		} else if (esquerra) {
 			pers.moviment(Input.ESQUERRA);
-		} else {
+		} else if (salto){
+			pers.moviment(Input.SALT);
+		} else{
 			pers.moviment(Input.RES);
 		}
 
-		if (w.getPressedKeys().contains('w') && pers.aterra) {
-			pers.moviment(Input.SALT);
-		} else if (w.getPressedKeys().contains('w') && pers.dobleSalto){
-			pers.moviment(Input.SALT);
-		}
 	}
 }
