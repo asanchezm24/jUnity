@@ -1,4 +1,3 @@
-import java.util.ArrayList;
 import java.util.Random;
 
 import Core.Field;
@@ -8,23 +7,21 @@ import Core.Window;
 public class Joc {
 
 	static int segundos;
-	static int puntos = 0;
 	static Field f = new Field();
 	static Window w = new Window(f);
 	static Crono crono = new Crono();
-	// hola
-	static ArrayList<Coin> coins = new ArrayList<>();
+	static Coin coinActual = null;
+	static long tiempoUltimaCoin = System.currentTimeMillis();
+	static Personatge pers = new Personatge("Adri", 800, w.getHeight() - 230, 950, w.getHeight() - 50, 0,
+			"resources/Juego/mrPopuu.png", f);
 
 	public static void main(String[] args) throws InterruptedException {
 
-
-
-		// Personaje más pequeño (ej. 50x75)
-		//Con este ratio en mi Pantalla se ve bien. Probadlo vosotros y me decís. -Xavi
-		Personatge pers = new Personatge("Adri", 800, w.getHeight()-230, 950, w.getHeight()-50, 0, "resources/Juego/mrPopuu.png", f);
+		// Con este ratio en mi Pantalla se ve bien. Probadlo vosotros y me decís. -Xavi
 
 		// Suelo
-		Roca terra = new Roca("terra", 0, w.getHeight()-50, w.getWidth(), w.getHeight(), 0, "resources/Juego/Suelo.png", f);
+		Roca terra = new Roca("terra", 0, w.getHeight() - 50, w.getWidth(), w.getHeight(), 0,
+				"resources/Juego/Suelo.png", f);
 
 		// Techo
 		Roca sostre = new Roca("sostre", 0, 0, w.getWidth(), 10, 0, "resources/Juego/Suelo.png", f);
@@ -32,7 +29,8 @@ public class Joc {
 		// 12 plataformas pequeñas (128x32), distribuidas en distintos puntos
 		Roca[] plataformas = new Roca[12];
 
-		plataformas[0] = new Roca("plat1", 50, w.getHeight()-300, 242, w.getHeight()-234, 0, "resources/Juego/plataforma192x64.png", f);
+		plataformas[0] = new Roca("plat1", 50, w.getHeight() - 300, 242, w.getHeight() - 234, 0,
+				"resources/Juego/plataforma192x64.png", f);
 		plataformas[1] = new Roca("plat2", 250, 650, 378, 682, 0, "resources/Juego/plataforma192x64.png", f);
 		plataformas[2] = new Roca("plat3", 450, 600, 578, 632, 0, "resources/Juego/plataforma192x64.png", f);
 		plataformas[3] = new Roca("plat4", 650, 550, 778, 582, 0, "resources/Juego/plataforma192x64.png", f);
@@ -45,75 +43,103 @@ public class Joc {
 		plataformas[10] = new Roca("plat11", 200, 200, 328, 232, 0, "resources/Juego/plataforma192x64.png", f);
 		plataformas[11] = new Roca("plat12", 400, 150, 528, 182, 0, "resources/Juego/plataforma192x64.png", f);
 
-		//Srite vacío para el timer
-		//He tenido que poner la clase Sprite en público, para no hacer una clase nueva.
-		//Si se necesita hacer otro, hacemos la clase y volvemos a poner el sprite en private o package.
-		Sprite temporizador = new Sprite("Temporizador", w.getWidth() - 200, 50, w.getWidth() - 20, 70, 0 ,f);
+		// Srite vacío para el timer
+		// He tenido que poner la clase Sprite en público, para no hacer una clase
+		// nueva.
+		// Si se necesita hacer otro, hacemos la clase y volvemos a poner el sprite en
+		// private o package.
+		Sprite temporizador = new Sprite("Temporizador", w.getWidth() - 200, 50, w.getWidth() - 20, 70, 0, f);
 		temporizador.text = true;
 
-		//Sprite.text se pone a true para que enseñe el Path como texto
-		Sprite marcador = new Sprite("Marcador",w.getWidth() - 200, 90, w.getWidth() - 20, 110, 0 ,f);
+		// Sprite.text se pone a true para que enseñe el Path como texto
+		Sprite marcador = new Sprite("Marcador", w.getWidth() - 200, 90, w.getWidth() - 20, 110, 0, f);
 		marcador.text = true;
 
-		crearCoins(pers);
+		coinActual = crearCoins();
 
 		boolean sortir = false;
 		while (!sortir) {
-			temporizador.path = "Temps: "+Integer.toString(segundos );
-			marcador.path = "Punts: "+Integer.toString(pers.getPuntos());
+			temporizador.path = "Temps: " + Integer.toString(segundos);
+			marcador.path = "Punts: " + Integer.toString(pers.getPuntos());
 			input(pers);
 			f.draw();
-			//TODO: Hay que mirar esto, tiene que haber otra forma.
+			long tiempoActual = System.currentTimeMillis();
+			if (tiempoActual - tiempoUltimaCoin >= 10000) { // 10 segundos en milisegundos
+				if (coinActual != null) {
+					coinActual.delete(); // elimina del campo
+				}
+				coinActual = crearCoins();
+				tiempoUltimaCoin = tiempoActual;
+			}
+
+			// TODO: Hay que mirar esto, tiene que haber otra forma.
 			Thread.sleep(45);
-			if(segundos == 0){
+			if (segundos == 0) {
 				sortir = true;
-				//Esto de abajo no funciona
-				Sprite gameOver = new Sprite("gameOver", (w.getWidth()/2)-200, (w.getHeight()/2) - 200,
-						(w.getWidth()/2)+200,(w.getHeight()/2) + 200,0,f);
+				// Esto de abajo no funciona
+				Sprite gameOver = new Sprite("gameOver", (w.getWidth() / 2) - 200, (w.getHeight() / 2) - 200,
+						(w.getWidth() / 2) + 200, (w.getHeight() / 2) + 200, 0, f);
 				gameOver.text = true;
 			}
 		}
 	}
 
-
 	public static void pillarSegundos(int i) {
 		segundos = i;
 	}
-	
-	public static void PillarPuntos(int i){
-		puntos = i;
+
+	// TODO: Que las Coins no spawneen en el timer pls -Xavi <3 os lamo el
+	// siempresucio
+	// Esto lo ha hecho el Sam
+	// Comenta el codigo, puerco.
+	public static Coin crearCoins() {
+		Random rand = new Random();
+		int x1 = Math.abs(rand.nextInt(0, w.getWidth()));
+		int y1 = Math.abs(rand.nextInt(20, w.getHeight() - 100));
+		Coin coin = new Coin("coin", x1, y1, x1 + 50, y1 + 50, 0, "resources/Juego/coin.png", f, crono);
+		coin.addObserver(pers);
+		return coin;
 	}
 
-	//TODO: Que las Coins no spawneen en el timer pls -Xavi <3 os lamo el siempresucio
-	//Esto lo ha hecho el Sam
-	//Comenta el codigo, puerco.
-	public static void crearCoins(Personatge pers) {
-		for (int i = 0; i < 10; i++) {
-			Random rand = new Random();
-			int x1 = Math.abs(rand.nextInt(0, w.getWidth()));
-			int y1 = Math.abs(rand.nextInt(20, w.getHeight()-100));
-			Coin coin = new Coin("coin" + i, x1, y1, x1 + 50, y1 + 50, 0, "resources/Juego/coin.png", f,crono);
-			coin.addObserver(pers);
-			coins.add(coin);
-		}
-	}
-
+	// Algo mas limpio que lo otro.
 	private static void input(Personatge pers) {
+		boolean keyPressed = false;
 
-		//Por alguna razón, esto funciona mejor que lo otro. No se, si veis otra forma mejor provadla.
-		boolean dreta = w.getPressedKeys().contains('d');
-		boolean esquerra = w.getPressedKeys().contains('a');
-		boolean salto = w.getPressedKeys().contains('w');
-
-		if (dreta) {
+		if (w.getPressedKeys().contains('d')) {
 			pers.moviment(Input.DRETA);
-		} else if (esquerra) {
+			keyPressed = true;
+		}
+		if (w.getPressedKeys().contains('a')) {
 			pers.moviment(Input.ESQUERRA);
-		} else if (salto){
+			keyPressed = true;
+		}
+		if (w.getPressedKeys().contains('w')) {
 			pers.moviment(Input.SALT);
-		} else{
+			keyPressed = true;
+		}
+
+		if (!keyPressed) {
 			pers.moviment(Input.RES);
 		}
-
 	}
+
+//	private static void input(Personatge pers) {
+//
+//		// Por alguna razón, esto funciona mejor que lo otro. No se, si veis otra forma
+//		// mejor provadla.
+//		boolean dreta = w.getPressedKeys().contains('d');
+//		boolean esquerra = w.getPressedKeys().contains('a');
+//		boolean salto = w.getPressedKeys().contains('w');
+//
+//		if (dreta) {
+//			pers.moviment(Input.DRETA);
+//		} else if (esquerra) {
+//			pers.moviment(Input.ESQUERRA);
+//		} else if (salto) {
+//			pers.moviment(Input.SALT);
+//		} else {
+//			pers.moviment(Input.RES);
+//		}
+//
+//	}
 }
