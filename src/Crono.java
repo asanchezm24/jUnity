@@ -6,7 +6,7 @@ public class Crono implements CoinObserver {
     Timer timer;
     TimerTask task;
     //Segundos con los que empieza el juego. Retocar si necesario.
-    int i = 30;
+    int i = 3;
 
     //Cuando se llama al constructor se inicializa el timer y se setea la Task.
     public Crono(){

@@ -63,6 +63,7 @@ public class Joc {
 				(w.getWidth() / 2) + 200, (w.getHeight() / 2) + 200, 0, f);
 
 		gameOver.solid = false;
+		gameOver.path = "GAME OVER";
 
 		coinActual = crearCoins();
 
@@ -75,16 +76,18 @@ public class Joc {
 			long tiempoActual = System.currentTimeMillis();
 			if (tiempoActual - tiempoUltimaCoin >= 10000) { // 10 segundos en milisegundos
 				if (coinActual != null) {
-					coinActual.delete(); // elimina del campo
+					//coinActual.delete(); // elimina del campo
 				}
 				coinActual = crearCoins();
 				tiempoUltimaCoin = tiempoActual;
 			}
 
 			// TODO: Hay que mirar esto, tiene que haber otra forma.
-			Thread.sleep(45);
+			Thread.sleep(30);
 			if (segundos == 0) {
-				//gameOver.text = true;
+				gameOver.solid = true;
+				gameOver.text = true;
+				f.draw();
 				sortir = true;
 			}
 		}
@@ -126,26 +129,53 @@ public class Joc {
 		int plataformaWidth = w.getWidth()/8;
 
 		//Primera Hilera:
-		plataformas[0] = new Roca("plat2",
+		plataformas[0] = new Roca("plat0",
 				plataformaWidth,
 				w.getHeight() - 300,
 				plataformaWidth + plataformaWidth,
-				w.getHeight() - 234,
+				w.getHeight() - 236,
 				0, "resources/Juego/plataforma192x64.png", f);
-		plataformas[1] = new Roca("plat2",
+		plataformas[1] = new Roca("plat1",
 				(int) plataformas[0].x2 + plataformaWidth + (plataformaWidth/2),
 				w.getHeight() - 300,
 				(int) plataformas[0].x2 + plataformaWidth + plataformaWidth + (plataformaWidth/2),
-				w.getHeight() - 234,
+				w.getHeight() - 236,
 				0, "resources/Juego/plataforma192x64.png", f);
 		plataformas[2] = new Roca("plat2",
 				(int) plataformas[1].x2 + plataformaWidth + (plataformaWidth/2),
 				w.getHeight() - 300,
 				(int) plataformas[1].x2 + plataformaWidth + plataformaWidth + (plataformaWidth/2),
-				w.getHeight() - 234,
+				w.getHeight() - 236,
 				0, "resources/Juego/plataforma192x64.png", f);
 
 	   	//Segunda Hilera
+
+		plataformas[3] = new Roca("plat2",
+				plataformaWidth/2,
+				(int)plataformas[0].y1 - (plataformaHeight* 4)- 64,
+				plataformaWidth/2 + plataformaWidth,
+				(int)plataformas[0].y1 - (plataformaHeight* 4) ,
+				0, "resources/Juego/plataforma192x64.png", f);
+
+		plataformas[4] = new Roca("plat2",
+				(int)plataformas[3].x2 + plataformaWidth,
+				(int)plataformas[0].y1 - (plataformaHeight* 4)- 64,
+				(int)plataformas[3].x2 + (plataformaWidth *2),
+				(int)plataformas[0].y1 - (plataformaHeight* 4) ,
+				0, "resources/Juego/plataforma192x64.png", f);
+		plataformas[5] = new Roca("plat2",
+				(int)plataformas[4].x2 + plataformaWidth,
+				(int)plataformas[0].y1 - (plataformaHeight* 4)- 64,
+				(int)plataformas[4].x2 + (plataformaWidth *2),
+				(int)plataformas[0].y1 - (plataformaHeight* 4) ,
+				0, "resources/Juego/plataforma192x64.png", f);
+		plataformas[6] = new Roca("plat2",
+				(int)plataformas[5].x2 + plataformaWidth,
+				(int)plataformas[0].y1 - (plataformaHeight* 4)- 64,
+				(int)plataformas[5].x2 + (plataformaWidth *2),
+				(int)plataformas[0].y1 - (plataformaHeight* 4) ,
+				0, "resources/Juego/plataforma192x64.png", f);
+
 
 
 		calcularTamañoPj(plataformas[0]);
