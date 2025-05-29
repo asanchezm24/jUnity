@@ -15,6 +15,25 @@ public class Joc {
 	static Personatge pers = new Personatge("Adri", 800, w.getHeight() - 230, 950, w.getHeight() - 50, 0,
 			"resources/Juego/mrPopuu.png", f);
 
+
+	// PROPORCIONES PORQUE LAS PANTALLAS DEL COLE SON BASURA:
+	/*
+	*  Plataformas: Cada plataforma es de x = 192 e y = 64 idílicamente
+	*               - Lo que pasa:
+	* 					En la proporcion correcta caben 15 de altura (16 muy apurados porue sobresalen del techo )
+	*  					Utilizad 16 si os va mejor para los calculos.
+	* 					Y 8 o 9 de ancho. (De nuevo igual que la altura. Lo que vaya mejor)
+	* 					ALTURA DE LA PLATAFORMA: AlturaVentana/15
+	* 					ANCHO PLATAFORMA: AnchoVentana/8
+	*
+	*  PJ: y = Plataforma.Y * 3 x = Plataforma.X (Mas o menos, hay que ajustarlo porque creo que es un poco menos, pero no mucho)
+	*          EJ: y = 64 * 3 ->  192 x = 150  ESTA PROPORCION EN MI PANTALLA VA BIEN.
+	*  TODO: COMPROBADLO PORFA
+	*  Distancia/Hileras de plataformas: Plataforma.Y * 4 Para dejar que el player pueda saltar horizontalmente.
+	*  Distancia/Plataformas misma Hilera: PJ.X * 2
+	 */
+
+
 	public static void main(String[] args) throws InterruptedException {
 
 		// Con este ratio en mi Pantalla se ve bien. Probadlo vosotros y me decís. -Xavi
@@ -27,11 +46,10 @@ public class Joc {
 		Roca sostre = new Roca("sostre", 0, 0, w.getWidth(), 10, 0, "resources/Juego/Suelo.png", f);
 
 		// 12 plataformas pequeñas (128x32), distribuidas en distintos puntos
-		Roca[] plataformas = new Roca[12];
+		Roca[] plataformas = calcularPlataformas(terra);
 
-		plataformas[0] = new Roca("plat1", 50, w.getHeight() - 300, 242, w.getHeight() - 234, 0,
-				"resources/Juego/plataforma192x64.png", f);
-		plataformas[1] = new Roca("plat2", 250, 650, 378, 682, 0, "resources/Juego/plataforma192x64.png", f);
+	/*	plataformas[1] = new Roca("plat2", (int)plataformas[0].x2+200, w.getHeight() - 300, (int) plataformas[0].x2+392, w.getHeight() - 234,
+				0, "resources/Juego/plataforma192x64.png", f);
 		plataformas[2] = new Roca("plat3", 450, 600, 578, 632, 0, "resources/Juego/plataforma192x64.png", f);
 		plataformas[3] = new Roca("plat4", 650, 550, 778, 582, 0, "resources/Juego/plataforma192x64.png", f);
 		plataformas[4] = new Roca("plat5", 850, 500, 978, 532, 0, "resources/Juego/plataforma192x64.png", f);
@@ -42,10 +60,9 @@ public class Joc {
 		plataformas[9] = new Roca("plat10", 950, 250, 1078, 282, 0, "resources/Juego/plataforma192x64.png", f);
 		plataformas[10] = new Roca("plat11", 200, 200, 328, 232, 0, "resources/Juego/plataforma192x64.png", f);
 		plataformas[11] = new Roca("plat12", 400, 150, 528, 182, 0, "resources/Juego/plataforma192x64.png", f);
-
+*/
 		// Srite vacío para el timer
-		// He tenido que poner la clase Sprite en público, para no hacer una clase
-		// nueva.
+		// He tenido que poner la clase Sprite en público, para no hacer una clase nueva.
 		// Si se necesita hacer otro, hacemos la clase y volvemos a poner el sprite en
 		// private o package.
 		Sprite temporizador = new Sprite("Temporizador", w.getWidth() - 200, 50, w.getWidth() - 20, 70, 0, f);
@@ -54,6 +71,12 @@ public class Joc {
 		// Sprite.text se pone a true para que enseñe el Path como texto
 		Sprite marcador = new Sprite("Marcador", w.getWidth() - 200, 90, w.getWidth() - 20, 110, 0, f);
 		marcador.text = true;
+
+		//Texto de final de partida
+		Sprite gameOver = new Sprite("gameOver", (w.getWidth() / 2) - 200, (w.getHeight() / 2) - 200,
+				(w.getWidth() / 2) + 200, (w.getHeight() / 2) + 200, 0, f);
+
+		gameOver.solid = false;
 
 		coinActual = crearCoins();
 
@@ -75,13 +98,22 @@ public class Joc {
 			// TODO: Hay que mirar esto, tiene que haber otra forma.
 			Thread.sleep(45);
 			if (segundos == 0) {
+				//gameOver.text = true;
 				sortir = true;
-				// Esto de abajo no funciona
-				Sprite gameOver = new Sprite("gameOver", (w.getWidth() / 2) - 200, (w.getHeight() / 2) - 200,
-						(w.getWidth() / 2) + 200, (w.getHeight() / 2) + 200, 0, f);
-				gameOver.text = true;
 			}
 		}
+	}
+
+	private static Roca[] calcularPlataformas(Roca terra) {
+		Roca[] plataformas = new Roca[15];
+
+		//Primera Hilera:
+
+	   	//Segunda Hilera
+
+		//Tercera Hilera
+
+		return plataformas;
 	}
 
 	public static void pillarSegundos(int i) {
@@ -98,6 +130,7 @@ public class Joc {
 		int y1 = Math.abs(rand.nextInt(20, w.getHeight() - 100));
 		Coin coin = new Coin("coin", x1, y1, x1 + 50, y1 + 50, 0, "resources/Juego/coin.png", f, crono);
 		coin.addObserver(pers);
+
 		return coin;
 	}
 
@@ -122,24 +155,4 @@ public class Joc {
 			pers.moviment(Input.RES);
 		}
 	}
-
-//	private static void input(Personatge pers) {
-//
-//		// Por alguna razón, esto funciona mejor que lo otro. No se, si veis otra forma
-//		// mejor provadla.
-//		boolean dreta = w.getPressedKeys().contains('d');
-//		boolean esquerra = w.getPressedKeys().contains('a');
-//		boolean salto = w.getPressedKeys().contains('w');
-//
-//		if (dreta) {
-//			pers.moviment(Input.DRETA);
-//		} else if (esquerra) {
-//			pers.moviment(Input.ESQUERRA);
-//		} else if (salto) {
-//			pers.moviment(Input.SALT);
-//		} else {
-//			pers.moviment(Input.RES);
-//		}
-//
-//	}
 }

@@ -33,13 +33,15 @@ public class Personatge extends PhysicBody implements CoinObserver {
 			Recogible rec = (Recogible) sprite;
 			rec.recoger();
 		}
+
+		System.out.println(sprite.name);
 	}
 
 	@Override
 	public void onCollisionExit(Sprite sprite) {
 		if (sprite instanceof Roca) {
 			// Cuando salte del colider del suelo Aterra se pone a false y se cambia el
-			// sprite por el de salto.
+			// sprite por el de salto. No notarán la diferencia. Es negro igual.
 			aterra = false;
 			System.out.println("Salio de la colision Roca");
 			// Esta función está en la clase Sprite del Core.
@@ -49,12 +51,14 @@ public class Personatge extends PhysicBody implements CoinObserver {
 
 	// Lo he retocado porque no me dejaba saltar mientras avanzaba.
 	public void moviment(Input in) {
+		//this.velocity[1] en la Y te permite mantener la fuerza de altura y poder
+		//seguir moviendote hacia los lados.
 
 		if (in == Input.DRETA) {
-			this.setVelocity(+3, this.velocity[1]);
+			this.setVelocity(+5, this.velocity[1]);
 		}
 		if (in == Input.ESQUERRA) {
-			this.setVelocity(-3, this.velocity[1]);
+			this.setVelocity(-5, this.velocity[1]);
 		}
 		if (in == Input.SALT) {
 			// No he borrado el codigo del Adri, está más abajo comentado.
@@ -74,51 +78,6 @@ public class Personatge extends PhysicBody implements CoinObserver {
 		}
 
 	}
-
-//	public void moviment(Input in) {
-//		//this.velocity[1] en la Y te permite mantener la fuerza de altura y poder
-//		//seguir moviendote hacia los lados.
-//		if (in == Input.DRETA) {
-//			this.setVelocity(+5, this.velocity[1]);
-//			this.flippedX = true;
-//		}
-//		if (in == Input.ESQUERRA) {
-//			this.setVelocity(-5, this.velocity[1]);
-//			this.flippedX = false;
-//		}
-//		if (in == Input.SALT) {
-//			//No he borrado el codigo del Adri, está más abajo comentado.
-//			if(aterra) {
-//				this.setVelocity(0, 0);
-//				this.addForce(0, -1);
-//				aterra = false;
-//				dobleSalto = true;
-//			}
-//			else if(dobleSalto) {
-//				this.setVelocity(0, 0);
-//				this.addForce(0, -2.5);
-//				dobleSalto = false;
-//			}
-//		}
-//		if(in.equals(Input.RES)){
-//			this.setVelocity(0, this.velocity[1]);
-//		}
-//	}
-
-	// Esto lo ha hecho el Adri
-	// Comenta el codigo, cochino
-//	public void salto() {
-//		if(aterra) {
-//			this.setVelocity(0, 0);
-//			this.addForce(0, -1.5);
-//			aterra = false;
-//		}
-//		else if(dobleSalto && !aterra) {
-//			this.setVelocity(0, 0);
-//			this.addForce(0, -1.5);
-//			dobleSalto = false;
-//		}
-//	}
 
 	@Override
 	public void update(int num) {
