@@ -29,12 +29,10 @@ public class Personatge extends PhysicBody implements CoinObserver {
 			dobleSalto = false;
 			this.changeImage("resources/Juego/mrPopuu.png");
 			System.out.println("Ha tocado suelo");
-		} else if (sprite instanceof Recogible) {
-			Recogible rec = (Recogible) sprite;
-			rec.recoger();
+		} else if (sprite instanceof Coin) {
+			Coin coin = (Coin) sprite;
+			coin.recoger();
 		}
-
-		System.out.println(sprite.name);
 	}
 
 	@Override
@@ -54,7 +52,6 @@ public class Personatge extends PhysicBody implements CoinObserver {
 		//this.velocity[1] en la Y te permite mantener la fuerza de altura y poder
 		//seguir moviendote hacia los lados.
 
-		System.out.println(in);
 		if (in == Input.DRETA) {
 			this.setVelocity(+5, this.velocity[1]);
 		}
@@ -83,7 +80,7 @@ public class Personatge extends PhysicBody implements CoinObserver {
 	}
 
 	@Override
-	public void update(int num) {
-		this.puntos += num;
+	public void update(int punts, int segudnos) {
+		this.puntos += punts;
 	}
 }

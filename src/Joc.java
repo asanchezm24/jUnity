@@ -84,7 +84,7 @@ public class Joc {
 			long tiempoActual = System.currentTimeMillis();
 			if (tiempoActual - tiempoUltimaCoin >= 10000) { // 10 segundos en milisegundos
 				if (coinActual != null) {
-					//coinActual.delete(); // elimina del campo
+					coinActual.delete(); // elimina del campo
 				}
 				coinActual = crearCoins();
 				tiempoUltimaCoin = tiempoActual;
@@ -106,13 +106,13 @@ public class Joc {
 	private static void calcularTamañoPj(Roca plataforma) {
 		//static Personatge pers = new Personatge("Adri", 800, w.getHeight() - 230, 950, w.getHeight() - 50, 0,
 		//			"resources/Juego/mrPopuu.png", f);
-		int anchoPj = w.getWidth() / 14;
-		int altoPj = (w.getHeight() / 16) * 3;
+		int anchoPj = w.getWidth() / 16;
+		int altoPj = (w.getHeight() / 16) * 2;
 
 		pers.x1 = plataforma.x2 + 50;
 		pers.x2 = pers.x1 + anchoPj;
-		pers.y1 = plataforma.y2 - 10;
-		pers.y2 = pers.y1 + altoPj- 10;
+		pers.y1 = plataforma.y2 + 10;
+		pers.y2 = pers.y1 + altoPj;
 	}
 
 
@@ -202,18 +202,24 @@ public class Joc {
 	// Comenta el codigo, puerco.
 	public static Coin crearCoins() {
 		Random rand = new Random();
-		int x1 = Math.abs(rand.nextInt(0, w.getWidth()));
+		int x1 = Math.abs(rand.nextInt(0, w.getWidth()-50));
 		int y1 = Math.abs(rand.nextInt(20, w.getHeight() - 100));
-		Coin coin = new CoinBasica("coin", x1, y1, x1 + 50, y1 + 50, 0, "resources/Juego/coin.png", f, crono);
-		
-		int r = rand.nextInt(1,11);
-		
-		if(r == 7) {
-			CoinRoja cr = new CoinRoja(coin);
-		}
-		coin.addObserver(pers);
 
-		return coin;
+		
+		int r = rand.nextInt(1,5);
+
+		if(r == 2) {
+			CoinRoja coin = new CoinRoja("coin", x1, y1, x1 + 50, y1 + 50, 0, "resources/Juego/CoinRoja.png", f);
+			coin.addObserver(pers);
+			coin.addObserver(crono);
+			return coin;
+		} else {
+			Coin coin = new Coin("coin", x1, y1, x1 + 50, y1 + 50, 0, "resources/Juego/coin.png", f);
+			coin.addObserver(pers);
+			coin.addObserver(crono);
+			return coin;
+		}
+
 	}
 
 	// Algo mas limpio que lo otro.

@@ -6,7 +6,7 @@ public class Crono implements CoinObserver {
     Timer timer;
     TimerTask task;
     //Segundos con los que empieza el juego. Retocar si necesario.
-    int i = 3;
+    int i = 30;
 
     //Cuando se llama al constructor se inicializa el timer y se setea la Task.
     public Crono(){
@@ -29,7 +29,8 @@ public class Crono implements CoinObserver {
 
     //Actualiza el tiempo cuando una moneda es recogida por el player.
     @Override
-    public void update(int segundos) {
+    public void update(int num, int segundos) {
+        System.out.println("Ha entrado en el update del Crono");
         this.i += segundos;
     }
 }

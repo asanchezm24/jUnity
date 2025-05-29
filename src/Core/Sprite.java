@@ -190,7 +190,7 @@ public class Sprite implements Serializable, Comparable<Sprite> {
 	 */
 	public Color color;
 
-	protected transient Field f;
+	public transient Field f;
 
 	
 	/**

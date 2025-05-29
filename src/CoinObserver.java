@@ -1,3 +1,3 @@
 public interface CoinObserver {
-    void update(int num);
+    void update(int puntos, int segundos);
 }
