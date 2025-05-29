@@ -8,6 +8,7 @@ public class Coin extends PhysicBody implements Recogible, CoinSubject {
 
 	ArrayList<CoinObserver> observers = new ArrayList<>();
 
+
 	public Coin(String name, int x1, int y1, int x2, int y2, double angle, String path, Field f,
 			CoinObserver observer) {
 		super(name, x1, y1, x2, y2, angle, path, f);

@@ -54,6 +54,7 @@ public class Personatge extends PhysicBody implements CoinObserver {
 		//this.velocity[1] en la Y te permite mantener la fuerza de altura y poder
 		//seguir moviendote hacia los lados.
 
+		System.out.println(in);
 		if (in == Input.DRETA) {
 			this.setVelocity(+5, this.velocity[1]);
 		}
@@ -63,13 +64,15 @@ public class Personatge extends PhysicBody implements CoinObserver {
 		if (in == Input.SALT) {
 			// No he borrado el codigo del Adri, está más abajo comentado.
 			if (aterra) {
+				System.out.println("Aqui entra");
 				this.setVelocity(0, 0);
-				this.addForce(0, -1);
+				this.addForce(0, -2.3);
 				aterra = false;
 				dobleSalto = true;
 			} else if (dobleSalto) {
+				System.out.println("Doble salt");
 				this.setVelocity(0, 0);
-				this.addForce(0, -2.5);
+				this.addForce(0, -2.3);
 				dobleSalto = false;
 			}
 		}

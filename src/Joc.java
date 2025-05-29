@@ -6,32 +6,16 @@ import Core.Window;
 
 public class Joc {
 
-	static int segundos;
-	static Field f = new Field();
-	static Window w = new Window(f);
-	static Crono crono = new Crono();
-	static Coin coinActual = null;
-	static long tiempoUltimaCoin = System.currentTimeMillis();
-	static Personatge pers = new Personatge("Adri", 800, w.getHeight() - 230, 950, w.getHeight() - 50, 0,
+	public static int segundos;
+	public static Field f = new Field();
+	public static Window w = new Window(f);
+	public static Crono crono = new Crono();
+	public static Coin coinActual = null;
+	public static long tiempoUltimaCoin = System.currentTimeMillis();
+	public static Personatge pers = new Personatge("Adri", 800, w.getHeight() - 230, 950, w.getHeight() - 50, 0,
 			"resources/Juego/mrPopuu.png", f);
 
 
-	// PROPORCIONES PORQUE LAS PANTALLAS DEL COLE SON BASURA:
-	/*
-	*  Plataformas: Cada plataforma es de x = 192 e y = 64 idílicamente
-	*               - Lo que pasa:
-	* 					En la proporcion correcta caben 15 de altura (16 muy apurados porue sobresalen del techo )
-	*  					Utilizad 16 si os va mejor para los calculos.
-	* 					Y 8 o 9 de ancho. (De nuevo igual que la altura. Lo que vaya mejor)
-	* 					ALTURA DE LA PLATAFORMA: AlturaVentana/15
-	* 					ANCHO PLATAFORMA: AnchoVentana/8
-	*
-	*  PJ: y = Plataforma.Y * 3 x = Plataforma.X (Mas o menos, hay que ajustarlo porque creo que es un poco menos, pero no mucho)
-	*          EJ: y = 64 * 3 ->  192 x = 150  ESTA PROPORCION EN MI PANTALLA VA BIEN.
-	*  TODO: COMPROBADLO PORFA
-	*  Distancia/Hileras de plataformas: Plataforma.Y * 4 Para dejar que el player pueda saltar horizontalmente.
-	*  Distancia/Plataformas misma Hilera: PJ.X * 2
-	 */
 
 
 	public static void main(String[] args) throws InterruptedException {
@@ -45,8 +29,10 @@ public class Joc {
 		// Techo
 		Roca sostre = new Roca("sostre", 0, 0, w.getWidth(), 10, 0, "resources/Juego/Suelo.png", f);
 
-		// 12 plataformas pequeñas (128x32), distribuidas en distintos puntos
+		//Calculos de dimensiones
 		Roca[] plataformas = calcularPlataformas(terra);
+		calcularTamañoPj(plataformas[0]);
+
 
 	/*	plataformas[1] = new Roca("plat2", (int)plataformas[0].x2+200, w.getHeight() - 300, (int) plataformas[0].x2+392, w.getHeight() - 234,
 				0, "resources/Juego/plataforma192x64.png", f);
@@ -104,15 +90,65 @@ public class Joc {
 		}
 	}
 
+	private static void calcularTamañoPj(Roca plataforma) {
+		//static Personatge pers = new Personatge("Adri", 800, w.getHeight() - 230, 950, w.getHeight() - 50, 0,
+		//			"resources/Juego/mrPopuu.png", f);
+		int anchoPj = w.getWidth() / 14;
+		int altoPj = (w.getHeight() / 16) * 3;
+
+		pers.x1 = plataforma.x2 + 50;
+		pers.x2 = pers.x1 + anchoPj;
+		pers.y1 = plataforma.y2;
+		pers.y2 = pers.y1 + altoPj;
+	}
+
+
+	// PROPORCIONES PORQUE LAS PANTALLAS DEL COLE SON BASURA:
+	/*
+	 *  Plataformas: Cada plataforma es de x = 192 e y = 64 idílicamente
+	 *               - Lo que pasa:
+	 * 					En la proporcion correcta caben 15 de altura (16 muy apurados porue sobresalen del techo )
+	 *  					Utilizad 16 si os va mejor para los calculos.
+	 * 					Y 8 o 9 de ancho. (De nuevo igual que la altura. Lo que vaya mejor)
+	 * 					ALTURA DE LA PLATAFORMA: AlturaVentana/15
+	 * 					ANCHO PLATAFORMA: AnchoVentana/8
+	 *
+	 *  PJ: y = Plataforma.Y * 3 x = Plataforma.X (Mas o menos, hay que ajustarlo porque creo que es un poco menos, pero no mucho)
+	 *          EJ: y = 64 * 3 ->  192 x = 150  ESTA PROPORCION EN MI PANTALLA VA BIEN.
+	 *  TODO: COMPROBADLO PORFA
+	 *  Distancia/Hileras de plataformas: Plataforma.Y * 4 Para dejar que el player pueda saltar horizontalmente.
+	 *  Distancia/Plataformas misma Hilera: PJ.X * 2
+	 */
 	private static Roca[] calcularPlataformas(Roca terra) {
 		Roca[] plataformas = new Roca[15];
 
+		int plataformaHeight = w.getHeight()/16;
+		int plataformaWidth = w.getWidth()/8;
+
 		//Primera Hilera:
+		plataformas[0] = new Roca("plat2",
+				plataformaWidth,
+				w.getHeight() - 300,
+				plataformaWidth + plataformaWidth,
+				w.getHeight() - 234,
+				0, "resources/Juego/plataforma192x64.png", f);
+		plataformas[1] = new Roca("plat2",
+				(int) plataformas[0].x2 + plataformaWidth + (plataformaWidth/2),
+				w.getHeight() - 300,
+				(int) plataformas[0].x2 + plataformaWidth + plataformaWidth + (plataformaWidth/2),
+				w.getHeight() - 234,
+				0, "resources/Juego/plataforma192x64.png", f);
+		plataformas[2] = new Roca("plat2",
+				(int) plataformas[1].x2 + plataformaWidth + (plataformaWidth/2),
+				w.getHeight() - 300,
+				(int) plataformas[1].x2 + plataformaWidth + plataformaWidth + (plataformaWidth/2),
+				w.getHeight() - 234,
+				0, "resources/Juego/plataforma192x64.png", f);
 
 	   	//Segunda Hilera
 
-		//Tercera Hilera
 
+		calcularTamañoPj(plataformas[0]);
 		return plataformas;
 	}
 
@@ -146,7 +182,7 @@ public class Joc {
 			pers.moviment(Input.ESQUERRA);
 			keyPressed = true;
 		}
-		if (w.getPressedKeys().contains('w')) {
+		if (w.getKeysDown().contains('w')) {
 			pers.moviment(Input.SALT);
 			keyPressed = true;
 		}
