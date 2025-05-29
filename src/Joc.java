@@ -1,3 +1,4 @@
+import java.awt.*;
 import java.util.Random;
 
 import Core.Field;
@@ -59,11 +60,18 @@ public class Joc {
 		marcador.text = true;
 
 		//Texto de final de partida
-		Sprite gameOver = new Sprite("gameOver", (w.getWidth() / 2) - 200, (w.getHeight() / 2) - 200,
-				(w.getWidth() / 2) + 200, (w.getHeight() / 2) + 200, 0, f);
+
+		Sprite eloi = new Sprite("Eloi", (w.getWidth() / 2) - 200, (w.getHeight() / 2) - 200,
+				(w.getWidth() / 2) + 200, (w.getHeight() / 2) + 200, 0, "resources/Juego/Eloi.jpg" ,f);
+		Sprite gameOver = new Sprite("gameOver", (int)(eloi.x1 + eloi.x2 / 2) - 100 , (w.getHeight() / 2) ,
+				(int)(eloi.x1 + eloi.x2 / 2) , (w.getHeight() / 2) , 0, f);
+
+		gameOver.font = new Font("Star Jedi", Font.PLAIN, 40);
 
 		gameOver.solid = false;
 		gameOver.path = "GAME OVER";
+		eloi.solid = false;
+		eloi.visible = false;
 
 		coinActual = crearCoins();
 
@@ -87,6 +95,8 @@ public class Joc {
 			if (segundos == 0) {
 				gameOver.solid = true;
 				gameOver.text = true;
+				eloi.solid = true;
+				eloi.visible = true;
 				f.draw();
 				sortir = true;
 			}
@@ -101,8 +111,8 @@ public class Joc {
 
 		pers.x1 = plataforma.x2 + 50;
 		pers.x2 = pers.x1 + anchoPj;
-		pers.y1 = plataforma.y2;
-		pers.y2 = pers.y1 + altoPj;
+		pers.y1 = plataforma.y2 - 10;
+		pers.y2 = pers.y1 + altoPj- 10;
 	}
 
 
