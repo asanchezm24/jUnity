@@ -10,12 +10,15 @@ public class CoinBasica extends PhysicBody implements Coin {
 	protected int punts = 1;
 	protected int temps = 10;
 
-	public CoinBasica(String name, int x1, int y1, int x2, int y2, double angle, String path, Field f,
-			CoinObserver observer) {
+	public CoinBasica(String name, int x1, int y1, int x2, int y2, double angle, String path, Field f, CoinObserver observer) {
 		super(name, x1, y1, x2, y2, angle, path, f);
 		this.addObserver(observer);
 	}
 
+	//Getters i Setters
+	
+	
+	
 	@Override
 	public void recoger() {
 		notifyObservers();

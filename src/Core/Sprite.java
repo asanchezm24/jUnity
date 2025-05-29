@@ -75,6 +75,16 @@ public class Sprite implements Serializable, Comparable<Sprite> {
 	 * The path to the image to that Sprite
 	 */
 	public String path;
+	
+	
+
+	public String getPath() {
+		return path;
+	}
+
+	public void setPath(String path) {
+		this.path = path;
+	}
 
 	/**
 	 * Specifies whether this Sprite is solid. Non-solid sprites will not collide.

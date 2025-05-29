@@ -194,7 +194,13 @@ public class Joc {
 		Random rand = new Random();
 		int x1 = Math.abs(rand.nextInt(0, w.getWidth()));
 		int y1 = Math.abs(rand.nextInt(20, w.getHeight() - 100));
-		Coin coin = new Coin("coin", x1, y1, x1 + 50, y1 + 50, 0, "resources/Juego/coin.png", f, crono);
+		Coin coin = new CoinBasica("coin", x1, y1, x1 + 50, y1 + 50, 0, "resources/Juego/coin.png", f, crono);
+		
+		int r = rand.nextInt(1,11);
+		
+		if(r == 7) {
+			CoinRoja cr = new CoinRoja(coin);
+		}
 		coin.addObserver(pers);
 
 		return coin;

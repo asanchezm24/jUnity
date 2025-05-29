@@ -2,8 +2,8 @@ public class CoinRoja extends CoinDecorator {
 
 	private int extraPoints = 9;
 
-	public CoinRoja(Coin decoratedCoin) {
-		super(decoratedCoin);
+	public CoinRoja(Coin coinDecorada) {
+		super(coinDecorada);
 	}
 
 	@Override
