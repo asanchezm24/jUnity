@@ -1,5 +1,4 @@
 import Core.Field;
-import Core.Sprite;
 
 import java.util.ArrayList;
 

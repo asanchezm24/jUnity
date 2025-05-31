@@ -31,23 +31,10 @@ public class Joc {
 		Roca sostre = new Roca("sostre", 0, 0, w.getWidth(), 10, 0, "resources/Juego/Suelo.png", f);
 
 		//Calculos de dimensiones
-		Roca[] plataformas = calcularPlataformas(terra);
-		calcularTamañoPj(plataformas[0]);
 
+		Roca[] plataformas = calcularPlataformas();
+		calcularTamanyoPj(plataformas[0]);
 
-	/*	plataformas[1] = new Roca("plat2", (int)plataformas[0].x2+200, w.getHeight() - 300, (int) plataformas[0].x2+392, w.getHeight() - 234,
-				0, "resources/Juego/plataforma192x64.png", f);
-		plataformas[2] = new Roca("plat3", 450, 600, 578, 632, 0, "resources/Juego/plataforma192x64.png", f);
-		plataformas[3] = new Roca("plat4", 650, 550, 778, 582, 0, "resources/Juego/plataforma192x64.png", f);
-		plataformas[4] = new Roca("plat5", 850, 500, 978, 532, 0, "resources/Juego/plataforma192x64.png", f);
-		plataformas[5] = new Roca("plat6", 150, 450, 278, 482, 0, "resources/Juego/plataforma192x64.png", f);
-		plataformas[6] = new Roca("plat7", 350, 400, 478, 432, 0, "resources/Juego/plataforma192x64.png", f);
-		plataformas[7] = new Roca("plat8", 550, 350, 678, 382, 0, "resources/Juego/plataforma192x64.png", f);
-		plataformas[8] = new Roca("plat9", 750, 300, 878, 332, 0, "resources/Juego/plataforma192x64.png", f);
-		plataformas[9] = new Roca("plat10", 950, 250, 1078, 282, 0, "resources/Juego/plataforma192x64.png", f);
-		plataformas[10] = new Roca("plat11", 200, 200, 328, 232, 0, "resources/Juego/plataforma192x64.png", f);
-		plataformas[11] = new Roca("plat12", 400, 150, 528, 182, 0, "resources/Juego/plataforma192x64.png", f);
-*/
 		// Srite vacío para el timer
 		// He tenido que poner la clase Sprite en público, para no hacer una clase nueva.
 		// Si se necesita hacer otro, hacemos la clase y volvemos a poner el sprite en
@@ -103,7 +90,7 @@ public class Joc {
 		}
 	}
 
-	private static void calcularTamañoPj(Roca plataforma) {
+	private static void calcularTamanyoPj(Roca plataforma) {
 		//static Personatge pers = new Personatge("Adri", 800, w.getHeight() - 230, 950, w.getHeight() - 50, 0,
 		//			"resources/Juego/mrPopuu.png", f);
 		int anchoPj = w.getWidth() / 16;
@@ -132,7 +119,7 @@ public class Joc {
 	 *  Distancia/Hileras de plataformas: Plataforma.Y * 4 Para dejar que el player pueda saltar horizontalmente.
 	 *  Distancia/Plataformas misma Hilera: PJ.X * 2
 	 */
-	private static Roca[] calcularPlataformas(Roca terra) {
+	private static Roca[] calcularPlataformas() {
 		Roca[] plataformas = new Roca[15];
 
 		int plataformaHeight = w.getHeight()/16;
@@ -188,7 +175,7 @@ public class Joc {
 
 
 
-		calcularTamañoPj(plataformas[0]);
+		calcularTamanyoPj(plataformas[0]);
 		return plataformas;
 	}
 
@@ -196,16 +183,13 @@ public class Joc {
 		segundos = i;
 	}
 
-	// TODO: Que las Coins no spawneen en el timer pls -Xavi <3 os lamo el
-	// siempresucio
+	// TODO: Que las Coins no spawneen en el timer pls -Xavi <3 os lamo el siempresucio
 	// Esto lo ha hecho el Sam
 	// Comenta el codigo, puerco.
 	public static Coin crearCoins() {
 		Random rand = new Random();
-		int x1 = Math.abs(rand.nextInt(0, w.getWidth()-50));
+		int x1 = Math.abs(rand.nextInt(0, w.getWidth() - 50));
 		int y1 = Math.abs(rand.nextInt(20, w.getHeight() - 100));
-
-		
 		int r = rand.nextInt(1,5);
 
 		if(r == 2) {

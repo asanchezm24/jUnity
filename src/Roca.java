@@ -1,8 +1,9 @@
 import Core.Field;
+import Core.PhysicBody;
 import Core.Sprite;
 
 //classe Roca que és filla de Sprite
-public class Roca extends Sprite {
+public class Roca extends PhysicBody {
 
 	// la variable no sera estatica, ja que no és una classe amb main
 	private int accionsDisponibles;
@@ -20,7 +21,20 @@ public class Roca extends Sprite {
 		// aqui faras altres coses que vulguis fer al crear una nova Roca.
 		comptador++;
 	}
-	
+
+	//Comprobar si la moneda spownea en una plataforma o el suelo
+	@Override
+	public void onCollisionEnter(Sprite sprite) {
+		if(sprite instanceof Coin){
+			((Coin) sprite).moverMoneda();
+		}
+	}
+
+	@Override
+	public void onCollisionExit(Sprite sprite) {
+
+	}
+
 	//constructor amb accions disponibles. Aquest es un constructor diferent al primer i has de tenir els dos!
     public Roca(String name, int x1, int y1, int x2, int y2, double angle, String path, Field f, int accions) {
         //crida al constructor del pare, com a primera linea. 

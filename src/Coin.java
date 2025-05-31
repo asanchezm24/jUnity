@@ -11,8 +11,6 @@ public class Coin extends Sprite implements Recogible, CoinSubject {
 		this.observers = new ArrayList<>();
 	}
 
-
-
 	@Override
 	public void addObserver(CoinObserver observer) {
 		this.observers.add(observer);
@@ -28,6 +26,13 @@ public class Coin extends Sprite implements Recogible, CoinSubject {
 		for(CoinObserver o: observers){
 			o.update(10, 10);
 		}
+	}
+
+	//Se llama si la moneda spownea en el suelo o en las plataformas
+	public void moverMoneda(){
+		this.y1 -= 64;
+		this.y2 -= 64;
+
 	}
 
 	@Override
