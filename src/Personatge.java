@@ -9,6 +9,7 @@ public class Personatge extends PhysicBody implements CoinObserver {
 	boolean dobleSalto = false;
 	// TODO: Mejorar movimiento y saltos.
 
+
 	public Personatge(String name, int x1, int y1, int x2, int y2, double angle, String path, Field f) {
 		super(name, x1, y1, x2, y2, angle, path, f);
 		this.puntos = 0;
@@ -63,20 +64,29 @@ public class Personatge extends PhysicBody implements CoinObserver {
 			if (aterra) {
 				System.out.println("Aqui entra");
 				this.setVelocity(0, 0);
-				this.addForce(0, -2.3);
+				this.setForce(0,3.5);
 				aterra = false;
 				dobleSalto = true;
 			} else if (dobleSalto) {
 				System.out.println("Doble salt");
 				this.setVelocity(0, 0);
-				this.addForce(0, -2.3);
+				this.setForce(0, 3.5);
 				dobleSalto = false;
+			} else {
+				normalizarSalto();
 			}
 		}
 		if (in == Input.RES) {
-			this.setVelocity(0, this.velocity[1]);
+			if(!aterra){
+				normalizarSalto();
+			} else {
+				this.setVelocity(0, this.velocity[1]);
+			}
 		}
+	}
 
+	private void normalizarSalto() {
+		this.setConstantForce(0, 0.4);
 	}
 
 	@Override

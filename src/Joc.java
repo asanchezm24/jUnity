@@ -16,6 +16,13 @@ public class Joc {
 	public static Personatge pers = new Personatge("Adri", 800, w.getHeight() - 230, 950, w.getHeight() - 50, 0,
 			"resources/Juego/mrPopuu.png", f);
 
+	/*
+	TODO: Normalizar Salto
+	TODO: Arreglar Bordes de Caida
+	TODO: Añadir niveles
+	TODO: Cambiar Pj
+	TODO: Cambiar mecánica de monedas // Hacer un juego de peleas normal
+	 */
 
 
 
